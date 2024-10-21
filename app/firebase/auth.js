@@ -1,6 +1,8 @@
 import { getAuth } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { app } from "./index";
+import { useRouter } from "next/navigation";
+
 
 export const auth = getAuth(app);
 export const unsubscribeObserver = onAuthStateChanged(auth, (user) => {

@@ -9,7 +9,8 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../firebase/index";
-import { v4 as uuidv4 } from "uuid";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export async function handleSignUp(username, password) {
   let isExists = false;
@@ -32,20 +33,17 @@ export async function handleSignUp(username, password) {
         const newUserName = user.displayName ?? username;
         await setDoc(docRef, { username: newUserName });
         console.log("added user to db");
+        alert("yey signed up");
+        return;
       })
       .catch((error) => {
-        console.log(
-          "dili ka sign up dol (not email or less than 5 char password) " +
-            username +
-            " " +
-            password
-        );
-
-        const errorCode = error.code;
-        const errorMessage = error.message;
         // ..
       });
+    alert(
+      "Input should be a valid email and password must be more than 5 characters"
+    );
     return;
   }
+  alert("The account is already registered. Please proceed to log in");
   //handle user already exists
 }

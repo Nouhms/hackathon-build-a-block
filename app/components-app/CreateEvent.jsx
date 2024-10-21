@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/components/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { v4 as uuidv4 } from "uuid";
@@ -26,7 +25,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { doc, setDoc } from "firebase/firestore";
 import { auth } from "../firebase/auth";
@@ -49,6 +47,8 @@ export function CreateEvent({ changed, setChanged }) {
   async function onSubmit(data) {
     console.log(data.date);
     setDate(data.date);
+    const user = auth.currentUser;
+    const name = user.displayName ?? user.email;
     const event = {
       title: title,
       description: description,
@@ -56,8 +56,8 @@ export function CreateEvent({ changed, setChanged }) {
       date: date,
       creator: creator,
       id: uuidv4(),
-      owner: auth.currentUser.uid,
-      attendees: [auth.currentUser.uid],
+      owner: user.uid,
+      attendees: [{ id: user.uid, name: name }],
     };
     await addEventToDB(event);
     console.log("done");

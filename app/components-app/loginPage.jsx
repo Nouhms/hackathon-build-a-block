@@ -29,7 +29,7 @@ export default function LoginPage() {
       <h1>Welcome</h1>
       <div className="flex w-full max-w-sm items-center space-x-2 my-1">
         <Input
-          placeholder="Enter your username"
+          placeholder="Enter your email (ex. juan@yahoo.com)"
           value={username}
           onChange={(e) => handleUsernameChange(e)}
         />
@@ -48,7 +48,10 @@ export default function LoginPage() {
         <Button
           type="submit"
           className="flex w-full max-w-sm items-center space-x-2 mt-2 mb-1"
-          onClick={(_) => handleLogIn(username, password)}
+          onClick={async (_) => {
+            const isValid = await handleLogIn(username, password);
+            if (isValid) router.push("eventsPage");
+          }}
         >
           Login
         </Button>
