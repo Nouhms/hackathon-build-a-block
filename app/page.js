@@ -1,7 +1,10 @@
 "use client"
-import { CreateEvent } from "./components-app/CreateEvent"
+import LoginPage from "./components-app/loginPage";
+
 export default function HomePage() {
-  return <div>
-    <CreateEvent />
-  </div>
+  return (
+    <div>
+      <LoginPage />
+    </div>
+  );
 }
